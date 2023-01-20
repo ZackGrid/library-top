@@ -19,7 +19,7 @@
       <button type="button" class="add-game">Add Game to Library</button>
       <button type="button" class="show-library">Show my Library</button>
     </div>
-    <form id="form" action="" method="get">
+    <form id="form" class="display" action="" method="get">
 
       <fieldset>
         <legend>Game Info</legend>
@@ -42,17 +42,20 @@
         <ul>
           <li>
             <label for="completed">Yes</label>
-            <input type="radio" name="is-completed" id="completed" value="true">
+            <input type="radio" name="is-completed" id="completed" value="Already completed">
           </li>
           <li>
             <label for="not-yet">No</label>
-            <input type="radio" name="is-completed" id="not-yet" value="false" checked>
+            <input type="radio" name="is-completed" id="not-yet" value="Not Yet Completed" checked>
           </li>
         </ul>
       </fieldset>
       <button class="save" type="submit">Save</button>
       <button type="button">Delete</button>
     </form>
+    <div class="game-library">
+
+    </div>
   </div>
 </body>
 
