@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./javascript.js" defer></script>
+  <title>Game Library</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>My Game Library</h1>
+    </div>
+    <div class="buttons">
+      <button type="button" class="add-game">Add Game to Library</button>
+      <button type="button" class="show-library">Show my Library</button>
+    </div>
+    <form id="form" action="" method="get">
+
+      <fieldset>
+        <legend>Game Info</legend>
+        <div>
+          <label for="name">Name: </label>
+          <input type="text" name="name" id="name">
+        </div>
+        <div>
+          <label for="name">Genre: </label>
+          <input type="text" name="genre" id="genre">
+        </div>
+        <div>
+          <label for="name">Platform: </label>
+          <input type="text" name="platform" id="platform">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Have you completed? </legend>
+        <ul>
+          <li>
+            <label for="completed">Yes</label>
+            <input type="radio" name="is-completed" id="completed" value="true">
+          </li>
+          <li>
+            <label for="not-yet">No</label>
+            <input type="radio" name="is-completed" id="not-yet" value="false" checked>
+          </li>
+        </ul>
+      </fieldset>
+      <button class="save" type="submit">Save</button>
+      <button type="button">Delete</button>
+    </form>
+  </div>
+</body>
+
+</html>
