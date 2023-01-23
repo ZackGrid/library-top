@@ -17,10 +17,10 @@ saveGame.addEventListener('click', prevent, false);
 
 // Object constructor
 function Game(name, genre, platform, isCompleted) {
-  this.name = name;
-  this.genre = genre;
-  this.platform = platform;
-  this.isCompleted = isCompleted;
+  this.Name = name;
+  this.Genre = genre;
+  this.Platform = platform;
+  this.Completed = isCompleted;
 }
 
 // Add function to prototype of Game Obj
@@ -45,18 +45,45 @@ addGame.addEventListener('click', () => {
 // this event will create cards with the games info
 // and show it. It will also remove the form from view.
 show.addEventListener('click', () => {
-  
+  if (cardsContainer.firstChild) {
+    return;
+  }
+  // Create a div for each game
   myGameLibrary.forEach(game => {
     const div = document.createElement('div');
     div.className = 'game-card';
     cardsContainer.appendChild(div);
+    div.setAttribute('id', game.Name);
+    // Populate div with info from object
     Object.entries(game).forEach(([key, value]) => {
       const info = document.createElement('p');
       info.textContent = `${key}: ${value}`;
       div.appendChild(info);
     })
   });
+  // Remove add game form from view
   form.classList.add('display');
+
+  // Add a delete button for each card
+  const cardsList = cardsContainer.childNodes;
+  cardsList.forEach(card => {
+    card.innerHTML += `<button class="delete ${card.id}" type="button">Delete</button>`;
+  })
+
+  // Make a node list with all the delete buttons
+  const deleteButton = document.querySelectorAll('.delete');
+
+  // Add event listener so it can delete an object from array and card from view
+  deleteButton.forEach(button => button.addEventListener('click', () => { 
+    const btnClass = button.getAttribute('class').split(' ');
+    const btnName = btnClass[1];
+    const index = myGameLibrary.findIndex(checkGame);
+    function checkGame(game) {
+      return game.Name === btnName;
+    }
+    myGameLibrary.splice(index, 1);
+    button.parentNode.remove();
+  }))
 })
 
 // Function to prevent default behaviour on submit
@@ -74,27 +101,3 @@ function prevent(event) {
   form.reset();
 }
 
-
-
-
-// function prevent(event) {
-//   const formData = new FormData(form);
-//   const formArray = [];
-//   for (const pair of formData.entries()) {
-//     formArray.push(pair[1]);
-//   }
-//   const newGame = new Game(...formArray);
-//   console.log(newGame);
-//   newGame.addGameToLibrary();
-//   event.preventDefault();
-// }
-
-
-
-// const zelda = new Game('Zelda Wind Waker', 'Action/Adventure', 'Nintendo GameCube', true);
-
-// zelda.addGameToLibrary();
-
-// function addGameToLibrary(game) {
-//   myGameLibrary.push(game);
-// }
