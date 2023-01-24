@@ -9,18 +9,12 @@ const show = document.querySelector('.show-library');
 const cardsContainer = document.querySelector('.game-library');
 const addGame = document.querySelector('.add-game');
 
-// Event to save game to library, with a call
-// to function prevent, made for preventing
-// default behaviour with submit, since theres no
-// database attached 
-saveGame.addEventListener('click', prevent, false);
-
 // Object constructor
-function Game(name, genre, platform, isCompleted) {
+function Game(name, genre, platform, completed) {
   this.Name = name;
   this.Genre = genre;
   this.Platform = platform;
-  this.Completed = isCompleted;
+  this.Completed = completed;
 }
 
 // Add function to prototype of Game Obj
@@ -28,6 +22,20 @@ function Game(name, genre, platform, isCompleted) {
 Game.prototype.addGameToLibrary = function () {
   myGameLibrary.push(this);
 }
+
+Game.prototype.toggleCompleted = function () {
+  if (this.Completed === 'Yes') {
+    this.Completed = 'Not Yet';
+  } else {
+    this.Completed = 'Yes';
+  }
+}
+
+// Event to save game to library, with a call
+// to function prevent, made for preventing
+// default behaviour with submit, since there's no
+// database attached 
+saveGame.addEventListener('click', prevent, false);
 
 // Attach event to button Add Game, so it shows
 // the form for the user to fill. Also it removes
@@ -44,47 +52,76 @@ addGame.addEventListener('click', () => {
 // Attach event listener to button 'show library',
 // this event will create cards with the games info
 // and show it. It will also remove the form from view.
+// Inside this event is every event related to the cards
+// such as delete card, and toggle completed status.
 show.addEventListener('click', () => {
+
+  // Check if there are cards in display already.
+  // if so, it will return before creating new ones.
   if (cardsContainer.firstChild) {
     return;
   }
+
   // Create a div for each game
   myGameLibrary.forEach(game => {
     const div = document.createElement('div');
     div.className = 'game-card';
     cardsContainer.appendChild(div);
     div.setAttribute('id', game.Name);
+
     // Populate div with info from object
     Object.entries(game).forEach(([key, value]) => {
       const info = document.createElement('p');
       info.textContent = `${key}: ${value}`;
+      info.classList.add = `${key}`;
       div.appendChild(info);
     })
   });
-  // Remove add game form from view
+  // Remove 'add game form' from view
   form.classList.add('display');
 
-  // Add a delete button for each card
+  // Make a node list with all the game cards
   const cardsList = cardsContainer.childNodes;
+
+  // Add a delete button for each card
   cardsList.forEach(card => {
     card.innerHTML += `<button class="delete ${card.id}" type="button">Delete</button>`;
+    card.innerHTML += `<button class="toggle ${card.id}" type="button">Change Status</button>`;
   })
 
   // Make a node list with all the delete buttons
+  // and one with the toggle buttons
   const deleteButton = document.querySelectorAll('.delete');
+  const toggleButton = document.querySelectorAll('.toggle');
 
-  // Add event listener so it can delete an object from array and card from view
-  deleteButton.forEach(button => button.addEventListener('click', () => { 
+  // function to get the index of the object in the array
+  function getIndex(button) {
     const btnClass = button.getAttribute('class').split(' ');
     const btnName = btnClass[1];
     const index = myGameLibrary.findIndex(checkGame);
     function checkGame(game) {
       return game.Name === btnName;
     }
+    return index;
+  }
+    
+  // Add event listener so it can delete an object from the
+  // array, and card from view.
+  deleteButton.forEach(button => button.addEventListener('click', () => { 
+    const index = getIndex(button);
     myGameLibrary.splice(index, 1);
     button.parentNode.remove();
   }))
-})
+
+  // Add event listener so it will toggle game completed
+  // status
+  toggleButton.forEach(button => button.addEventListener('click', () => {
+    const index = getIndex(button);
+    myGameLibrary[index].toggleCompleted();
+    addGame.click();
+    show.click();
+  }))
+})  
 
 // Function to prevent default behaviour on submit
 // and create a new object whilst storing it in the
@@ -100,4 +137,3 @@ function prevent(event) {
   event.preventDefault();
   form.reset();
 }
-
