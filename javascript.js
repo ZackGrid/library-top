@@ -10,8 +10,8 @@ const cardsContainer = document.querySelector('.game-library');
 const addGame = document.querySelector('.add-game');
 
 // Object constructor
-function Game(name, genre, platform, completed) {
-  this.Name = name;
+function Game(title, genre, platform, completed) {
+  this.Title = title;
   this.Genre = genre;
   this.Platform = platform;
   this.Completed = completed;
@@ -44,7 +44,7 @@ addGame.addEventListener('click', () => {
   form.classList.remove('display');
   if (cardsContainer != null) {
     while (cardsContainer.firstChild) {
-    cardsContainer.removeChild(cardsContainer.firstChild);
+      cardsContainer.removeChild(cardsContainer.firstChild);
     }
   }
 })
@@ -67,7 +67,7 @@ show.addEventListener('click', () => {
     const div = document.createElement('div');
     div.className = 'game-card';
     cardsContainer.appendChild(div);
-    div.setAttribute('id', game.Name);
+    div.setAttribute('title', game.Title);
 
     // Populate div with info from object
     Object.entries(game).forEach(([key, value]) => {
@@ -85,8 +85,10 @@ show.addEventListener('click', () => {
 
   // Add a delete button for each card
   cardsList.forEach(card => {
-    card.innerHTML += `<button class="delete ${card.id}" type="button">Delete</button>`;
-    card.innerHTML += `<button class="toggle ${card.id}" type="button">Change Status</button>`;
+    const cardButtons = document.createElement('div');
+    cardButtons.innerHTML += `<button class="toggle ${card.title}" type="button">Change Status</button>`;
+    cardButtons.innerHTML += `<button class="delete ${card.title}" type="button">Delete</button>`;
+    card.appendChild(cardButtons);
   })
 
   // Make a node list with all the delete buttons
@@ -97,37 +99,43 @@ show.addEventListener('click', () => {
   // function to get the index of the object in the array
   function getIndex(button) {
     const btnClass = button.getAttribute('class').split(' ');
-    const btnName = btnClass[1];
+    btnClass.splice(0, 1);
+    const btnName = btnClass.join(' ');
     const index = myGameLibrary.findIndex(checkGame);
     function checkGame(game) {
-      return game.Name === btnName;
+      return game.Title === btnName;
     }
     return index;
   }
-    
+
   // Add event listener so it can delete an object from the
   // array, and card from view.
-  deleteButton.forEach(button => button.addEventListener('click', () => { 
+  deleteButton.forEach(button => button.addEventListener('click', () => {
     const index = getIndex(button);
-    cardsList[index].innerHTML += '<span class="you-sure-message">Are You Sure You Want to Delete?</span>';
+    myGameLibrary.splice(index, 1);
+    addGame.click();
+    show.click();
+    // cardsList[index].innerHTML += '<span class="you-sure-message">Are You Sure You Want to Delete?</span>';
 
-    const time = setTimeout(youSureButton, 1000);
-    const deleteTime = setTimeout(deleteTimeout, 1001);
-    
+    // delay the confirmation button to delete 
+    // in 1 sec time
+    // const time = setTimeout(youSureButton, 1000);
+    // const deleteTime = setTimeout(deleteTimeout, 1001);
+
     // cardsList[index].innerHTML += '<button class="you-sure" type="button">Yes</button>';
 
-    function youSureButton () {
-      cardsList[index].innerHTML += '<button class="you-sure" type="button">Yes</button>';
-    }
+    // function youSureButton() {
+    //   cardsList[index].innerHTML += '<button class="you-sure" type="button">Yes</button>';
+    // }
 
-    function deleteTimeout() {
-      const youSure = document.querySelector('.you-sure');
-      youSure.addEventListener('click', () => {
-      myGameLibrary.splice(index, 1);
-      addGame.click();
-      show.click();
-    })
-    }    
+    // function deleteTimeout() {
+    //   const youSure = document.querySelector('.you-sure');
+    //   youSure.addEventListener('click', () => {
+    //     myGameLibrary.splice(index, 1);
+    //     addGame.click();
+    //     show.click();
+    //   })
+    // }
   }))
 
   // Add event listener so it will toggle game completed
@@ -138,7 +146,7 @@ show.addEventListener('click', () => {
     addGame.click();
     show.click();
   }))
-})  
+})
 
 // Function to prevent default behaviour on submit
 // and create a new object whilst storing it in the

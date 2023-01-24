@@ -15,43 +15,43 @@
     <div class="header">
       <h1>My Game Library</h1>
     </div>
-    <div class="buttons">
-      <button type="button" class="add-game">Add Game to Library</button>
-      <button type="button" class="show-library">Show my Library</button>
+    <div class="header-buttons">
+      <button type="button" class="add-game">ADD GAME TO LIBRARY</button>
+      <button type="button" class="show-library">SHOW LIBRARY</button>
     </div>
     <form id="form" class="display" action="" method="get">
 
       <fieldset>
         <legend>Game Info</legend>
         <div>
-          <label for="name">Name: </label>
-          <input type="text" name="name" id="name">
+          <label for="name">Title: </label>
+          <input type="text" name="name" id="name" placeholder="The Legend of Zelda: Link's Awakening">
         </div>
         <div>
           <label for="name">Genre: </label>
-          <input type="text" name="genre" id="genre">
+          <input type="text" name="genre" id="genre" placeholder="Action/Adventure">
         </div>
         <div>
           <label for="name">Platform: </label>
-          <input type="text" name="platform" id="platform">
+          <input type="text" name="platform" id="platform" placeholder="Game Boy">
         </div>
       </fieldset>
 
       <fieldset>
         <legend>Have you completed? </legend>
         <ul>
-          <li>
+          <li class="yes">
             <label for="completed">Yes</label>
             <input type="radio" name="is-completed" id="completed" value="Yes">
           </li>
-          <li>
+          <li class="no">
             <label for="not-yet">No</label>
             <input type="radio" name="is-completed" id="not-yet" value="Not Yet" checked>
           </li>
         </ul>
       </fieldset>
-      <button class="save" type="submit">Save</button>
-      
+      <button class="save" type="submit">SAVE</button>
+
     </form>
     <div class="game-library">
 

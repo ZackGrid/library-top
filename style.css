@@ -4,11 +4,185 @@
   margin: 0;
 }
 
+:root {
+  --main-color: #3D405B;
+  --main-light: #62657e;
+  --main-dark: #21243d;
+  --green: #81B29A;
+  --contrast: #E07A5F;
+  --contrast-light: #F2CC8F;
+  --cream: #F4F1DE;
+
+  --grey: #94a3b8;
+  --medium-grey: #cbd5e1;
+  --light-grey: #cbd5e1;
+  --medium-light: #e2e8f0;
+  --light: #f1f5f9;
+  --white: #f8fafc;
+}
+
+@font-face {
+  font-family: 'general-estation-regular';
+  src: url('font/webfontkit-20230124-102823/generalestation-regular-webfont.woff2') format('woff2'),
+    url('font/webfontkit-20230124-102823/generalestation-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  font-family: 'general-estation-regular', system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background-color: var(--main-color);
+  color: var(--main-dark);
+}
+
 .display {
-  display: none;
+  display: none !important;
+}
+
+.container {
+  display: grid;
+  gap: 20px;
+}
+
+.header {
+  display: grid;
+  width: 100%;
+  padding: 20px;
+  justify-items: center;
+  text-align: center;
+  color: var(--main-dark);
+  background-color: var(--light);
+  /* box-shadow: 0px 1px 10px 4px var(--grey); */
+}
+
+#form,
+.game-card {
+  display: grid;
+  margin: auto;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--medium-grey);
+  background-color: var(--light);
+}
+
+.game-card {
+  border-left: 10px solid var(--contrast);
+}
+
+fieldset div,
+fieldset ul {
+  padding: 15px;
+}
+
+fieldset ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+input[type='text'] {
+  padding: 5px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+  border: 2px solid var(--contrast);
+}
+
+fieldset {
+  border-radius: 10px;
 }
 
 .game-library {
   display: grid;
-  grid-template-rows: repeat(autofit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  padding: 15px;
+  background-color: var(--main-light);
+}
+
+button {
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font: inherit;
+}
+
+.header-buttons {
+  display: grid;
+  grid-template-columns: minmax(100px, 400px) minmax(100px, 400px);
+  margin: auto;
+  gap: 25px;
+  padding: 15px;
+}
+
+.game-card div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.header-buttons button {
+  background-color: var(--light);
+  color: var(--main-dark);
+  border-left: 30px solid var(--contrast);
+  /* box-shadow: 3px 3px 5px 1px var(--grey); */
+}
+
+.header-buttons button:hover {
+  border-left: 30px solid var(--green);
+  cursor: pointer;
+  box-shadow: 0 0 3px 3px var(--green);
+}
+
+.header-buttons button:active {
+  border-left: 30px solid var(--green);
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.save {
+  background-color: var(--contrast);
+  color: var(--light);
+}
+
+.save:hover {
+  background-color: var(--green);
+  cursor: pointer;
+}
+
+.save:active {
+  background-color: #51856c;
+}
+
+.game-card button.delete {
+  background-color: black;
+  color: var(--light);
+}
+
+.game-card button.toggle {
+  background-color: var(--main-color);
+  color: var(--light);
+}
+
+.game-card button.delete:hover {
+  cursor: crosshair;
+  background-color: #ad2c08;
+}
+
+.game-card button.toggle:hover {
+  cursor: grab;
+  background-color: var(--main-light);
+}
+
+.game-card button.toggle:active {
+  cursor: grabbing;
+  background-color: var(--main-dark);
 }
