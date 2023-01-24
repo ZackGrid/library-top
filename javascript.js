@@ -109,8 +109,25 @@ show.addEventListener('click', () => {
   // array, and card from view.
   deleteButton.forEach(button => button.addEventListener('click', () => { 
     const index = getIndex(button);
-    myGameLibrary.splice(index, 1);
-    button.parentNode.remove();
+    cardsList[index].innerHTML += '<span class="you-sure-message">Are You Sure You Want to Delete?</span>';
+
+    const time = setTimeout(youSureButton, 1000);
+    const deleteTime = setTimeout(deleteTimeout, 1001);
+    
+    // cardsList[index].innerHTML += '<button class="you-sure" type="button">Yes</button>';
+
+    function youSureButton () {
+      cardsList[index].innerHTML += '<button class="you-sure" type="button">Yes</button>';
+    }
+
+    function deleteTimeout() {
+      const youSure = document.querySelector('.you-sure');
+      youSure.addEventListener('click', () => {
+      myGameLibrary.splice(index, 1);
+      addGame.click();
+      show.click();
+    })
+    }    
   }))
 
   // Add event listener so it will toggle game completed
